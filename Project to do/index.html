@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo Manager</title>
+    <link rel="stylesheet" href="TO_do.css">
+</head>
+<body>
+    <div class="todo-container">
+        <h2>TodoInput</h2>
+        <div class="input-container">
+            <input type="text" id="taskInput" placeholder="New Todo">
+            <button id="addTaskButton">Add new task</button>
+        </div>
+        
+        <h2>TodoList</h2>
+        <div class="filter-buttons">
+            <button id="filterAll">All</button>
+            <button id="filterDone">Done</button>
+            <button id="filterTodo">Todo</button>
+        </div>
+
+        <ul id="todoList">
+            <!-- Tasks will be dynamically added here -->
+        </ul>
+
+        <div class="action-buttons">
+            <button id="deleteDoneTasks" class="delete">Delete done tasks</button>
+            <button id="deleteAllTasks" class="delete">Delete all tasks</button>
+        </div>
+    </div>
+    <script src="todo.js"></script>
+</body>
+</html>
