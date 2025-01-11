@@ -1,94 +1,124 @@
-// Select elements
-const taskInput = document.getElementById('taskInput');
-const addTaskButton = document.getElementById('addTaskButton');
-const todoList = document.getElementById('todoList');
-const filterAll = document.getElementById('filterAll');
-const filterDone = document.getElementById('filterDone');
-const filterTodo = document.getElementById('filterTodo');
-const deleteDoneTasks = document.getElementById('deleteDoneTasks');
-const deleteAllTasks = document.getElementById('deleteAllTasks');
+const todoInput = document.getElementById("todoInput");
+const addTaskButton = document.getElementById("addTaskButton");
+const todoList = document.getElementById("todoList");
+const filterAllButton = document.getElementById("filterAllButton");
+const filterDoneButton = document.getElementById("filterDoneButton");
+const filterTodoButton = document.getElementById("filterTodoButton");
+const deleteDoneTasksButton = document.getElementById("deleteDoneTasksButton");
+const deleteAllTasksButton = document.getElementById("deleteAllTasksButton");
+const errorMessage = document.getElementById("errorMessage");
+const modal = document.getElementById("modal");
+const modalInput = document.getElementById("modalInput");
+const confirmButton = document.getElementById("confirmButton");
+const cancelButton = document.getElementById("cancelButton");
 
-// Load tasks from localStorage
-function loadTasks() {
-    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    tasks.forEach(task => createTaskElement(task.text, task.done));
-}
+let todos = JSON.parse(localStorage.getItem("todos")) || [];
+let editingIndex = null;
 
-// Save tasks to localStorage
-function saveTasks() {
-    const tasks = Array.from(todoList.children).map(item => ({
-        text: item.querySelector('span').textContent,
-        done: item.classList.contains('done')
-    }));
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-}
+const saveToLocalStorage = () => localStorage.setItem("todos", JSON.stringify(todos));
 
-// Create a task element
-function createTaskElement(taskText, done = false) {
-    const taskItem = document.createElement('li');
-    taskItem.className = `todo-item ${done ? 'done' : ''}`;
+const renderTodos = (filter = "all") => {
+  todoList.innerHTML = "";
 
-    const taskContent = document.createElement('span');
-    taskContent.textContent = taskText;
+  const filteredTodos =
+    filter === "all"
+      ? todos
+      : filter === "done"
+      ? todos.filter(todo => todo.done)
+      : todos.filter(todo => !todo.done);
 
-    const completeButton = document.createElement('button');
-    completeButton.textContent = '✔';
-    completeButton.classList.add('complete');
-    completeButton.onclick = () => {
-        taskItem.classList.toggle('done');
-        saveTasks();
-    };
+      filteredTodos.forEach((todo, index) => {
+        const listItem = document.createElement("li");
+        listItem.className = `todo-item ${todo.done ? "done" : ""}`;
+        listItem.innerHTML = `
+          <span class="task">${todo.text}</span>
+          <div class="actions">
+            <input type="checkbox" ${todo.done ? "checked" : ""} onclick="toggleDone(${index})">
+            <button onclick="openEditModal(${index})">✏</button>
+            <button onclick="deleteTask(${index})">🗑</button>
+          </div>
+        `;
+        todoList.appendChild(listItem);
+    });
+    
 
-    const editButton = document.createElement('button');
-    editButton.textContent = '✏';
-    editButton.classList.add('edit');
-    editButton.onclick = () => {
-        const newTaskText = prompt('Edit task:', taskContent.textContent);
-        if (newTaskText) {
-            taskContent.textContent = newTaskText;
-            saveTasks();
-        }
-    };
-
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = '🗑';
-    deleteButton.classList.add('delete');
-    deleteButton.onclick = () => {
-        taskItem.remove();
-        saveTasks();
-    };
-
-    taskItem.append(taskContent, completeButton, editButton, deleteButton);
-    todoList.appendChild(taskItem);
-}
-
-// Add task
-addTaskButton.onclick = () => {
-    const taskText = taskInput.value.trim();
-    if (!taskText) return alert('Task cannot be empty.');
-    createTaskElement(taskText);
-    taskInput.value = '';
-    saveTasks();
+  deleteDoneTasksButton.disabled = todos.every(todo => !todo.done);
+  deleteAllTasksButton.disabled = todos.length === 0;
 };
 
-// Filter tasks
-filterAll.onclick = () => Array.from(todoList.children).forEach(item => (item.style.display = 'flex'));
-filterDone.onclick = () => Array.from(todoList.children).forEach(item => (item.style.display = item.classList.contains('done') ? 'flex' : 'none'));
-filterTodo.onclick = () => Array.from(todoList.children).forEach(item => (item.style.display = !item.classList.contains('done') ? 'flex' : 'none'));
+const addTask = () => {
+  const text = todoInput.value.trim();
+  if (!text) {
+    errorMessage.textContent = "Task cannot be empty!";
+    return;
+  }
+  if (text.length < 5) {
+    errorMessage.textContent = "Task must be at least 5 characters long!";
+    return;
+  }
+  if (/^\d/.test(text)) {
+    errorMessage.textContent = "Task cannot start with a number!";
+    return;
+  }
 
-// Delete done tasks
-deleteDoneTasks.onclick = () => {
-    Array.from(todoList.children)
-        .filter(item => item.classList.contains('done'))
-        .forEach(item => item.remove());
-    saveTasks();
+  todos.push({ text, done: false });
+  saveToLocalStorage();
+  renderTodos();
+  todoInput.value = "";
+  errorMessage.textContent = "";
 };
 
-// Delete all tasks
-deleteAllTasks.onclick = () => {
-    todoList.innerHTML = '';
-    saveTasks();
+const toggleDone = index => {
+  todos[index].done = !todos[index].done;
+  saveToLocalStorage();
+  renderTodos();
 };
 
-// Load tasks on page load
-loadTasks();
+const deleteTask = index => {
+  todos.splice(index, 1);
+  saveToLocalStorage();
+  renderTodos();
+};
+
+const deleteDoneTasks = () => {
+  todos = todos.filter(todo => !todo.done);
+  saveToLocalStorage();
+  renderTodos();
+};
+
+const deleteAllTasks = () => {
+  todos = [];
+  saveToLocalStorage();
+  renderTodos();
+};
+
+const openEditModal = index => {
+  editingIndex = index;
+  modalInput.value = todos[index].text;
+  modal.classList.remove("hidden");
+};
+
+const confirmEdit = () => {
+  const text = modalInput.value.trim();
+  if (!text || text.length < 5 || /^\d/.test(text)) {
+    errorMessage.textContent = "Invalid input!";
+    return;
+  }
+  todos[editingIndex].text = text;
+  saveToLocalStorage();
+  renderTodos();
+  modal.classList.add("hidden");
+};
+
+const closeModal = () => modal.classList.add("hidden");
+
+addTaskButton.addEventListener("click", addTask);
+filterAllButton.addEventListener("click", () => renderTodos("all"));
+filterDoneButton.addEventListener("click", () => renderTodos("done"));
+filterTodoButton.addEventListener("click", () => renderTodos("todo"));
+deleteDoneTasksButton.addEventListener("click", deleteDoneTasks);
+deleteAllTasksButton.addEventListener("click", deleteAllTasks);
+confirmButton.addEventListener("click", confirmEdit);
+cancelButton.addEventListener("click", closeModal);
+
+renderTodos();

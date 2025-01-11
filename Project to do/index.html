@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo Manager</title>
-    <link rel="stylesheet" href="TO_do.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List</title>
+  <link rel="stylesheet" href="TO_do.css">
 </head>
 <body>
-    <div class="todo-container">
-        <h2>TodoInput</h2>
-        <div class="input-container">
-            <input type="text" id="taskInput" placeholder="New Todo">
-            <button id="addTaskButton">Add new task</button>
-        </div>
-        
-        <h2>TodoList</h2>
-        <div class="filter-buttons">
-            <button id="filterAll">All</button>
-            <button id="filterDone">Done</button>
-            <button id="filterTodo">Todo</button>
-        </div>
-
-        <ul id="todoList">
-            <!-- Tasks will be dynamically added here -->
-        </ul>
-
-        <div class="action-buttons">
-            <button id="deleteDoneTasks" class="delete">Delete done tasks</button>
-            <button id="deleteAllTasks" class="delete">Delete all tasks</button>
-        </div>
+  <div class="container">
+    <h1>TodoInput</h1>
+    <div class="todo-input">
+      <input id="todoInput" type="text" placeholder="New Todo">
+      <button id="addTaskButton">Add new task</button>
+      <p id="errorMessage" class="error-message"></p>
     </div>
-    <script src="todo.js"></script>
+    <h1>TodoList</h1>
+    <div class="filter-buttons">
+      <button id="filterAllButton">All</button>
+      <button id="filterDoneButton">Done</button>
+      <button id="filterTodoButton">Todo</button>
+    </div>
+    <ul id="todoList"></ul>
+    <div class="actions">
+      <button id="deleteDoneTasksButton" disabled>Delete done tasks</button>
+      <button id="deleteAllTasksButton" disabled>Delete all tasks</button>
+    </div>
+  </div>
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <h2 id="modalTitle">Edit Task</h2>
+      <input id="modalInput" type="text">
+      <div class="modal-actions">
+        <button id="confirmButton">Confirm</button>
+        <button id="cancelButton">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <script src="todo.js"></script>
 </body>
 </html>
