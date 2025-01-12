@@ -27,20 +27,19 @@ const renderTodos = (filter = "all") => {
       ? todos.filter(todo => todo.done)
       : todos.filter(todo => !todo.done);
 
-      filteredTodos.forEach((todo, index) => {
-        const listItem = document.createElement("li");
-        listItem.className = `todo-item ${todo.done ? "done" : ""}`;
-        listItem.innerHTML = `
-          <span class="task">${todo.text}</span>
-          <div class="actions">
-            <input type="checkbox" ${todo.done ? "checked" : ""} onclick="toggleDone(${index})">
-            <button onclick="openEditModal(${index})">✏</button>
-            <button onclick="deleteTask(${index})">🗑</button>
-          </div>
-        `;
-        todoList.appendChild(listItem);
-    });
-    
+  filteredTodos.forEach((todo, index) => {
+    const listItem = document.createElement("li");
+    listItem.className = `task ${todo.done ? "completed-task" : ""}`;
+    listItem.innerHTML = `
+      <span>${todo.text}</span>
+      <div class="task-buttons">
+        <input type="checkbox" ${todo.done ? "checked" : ""} onchange="toggleDone(${index})">
+        <button class="edit" data-index="${index}">✏</button>
+        <button class="delete" onclick="deleteTask(${index})">🗑</button>
+      </div>
+    `;
+    todoList.appendChild(listItem);
+  });
 
   deleteDoneTasksButton.disabled = todos.every(todo => !todo.done);
   deleteAllTasksButton.disabled = todos.length === 0;
@@ -50,14 +49,17 @@ const addTask = () => {
   const text = todoInput.value.trim();
   if (!text) {
     errorMessage.textContent = "Task cannot be empty!";
+    errorMessage.style.display = "block";
     return;
   }
   if (text.length < 5) {
     errorMessage.textContent = "Task must be at least 5 characters long!";
+    errorMessage.style.display = "block";
     return;
   }
   if (/^\d/.test(text)) {
     errorMessage.textContent = "Task cannot start with a number!";
+    errorMessage.style.display = "block";
     return;
   }
 
@@ -66,6 +68,7 @@ const addTask = () => {
   renderTodos();
   todoInput.value = "";
   errorMessage.textContent = "";
+  errorMessage.style.display = "none";
 };
 
 const toggleDone = index => {
@@ -93,25 +96,55 @@ const deleteAllTasks = () => {
 };
 
 const openEditModal = index => {
-  editingIndex = index;
-  modalInput.value = todos[index].text;
-  modal.classList.remove("hidden");
+  editingIndex = index; // Save the index of the task being edited
+  modalInput.value = todos[index].text; // Set the modal input value to the current task text
+  modal.classList.add("show-modal"); // Show the modal
 };
 
 const confirmEdit = () => {
   const text = modalInput.value.trim();
-  if (!text || text.length < 5 || /^\d/.test(text)) {
-    errorMessage.textContent = "Invalid input!";
+
+  // Validation checks
+  if (!text) {
+    errorMessage.textContent = "Task cannot be empty!";
+    errorMessage.style.display = "block";
     return;
   }
+  if (text.length < 5) {
+    errorMessage.textContent = "Task must be at least 5 characters long!";
+    errorMessage.style.display = "block";
+    return;
+  }
+  if (/^\d/.test(text)) {
+    errorMessage.textContent = "Task cannot start with a number!";
+    errorMessage.style.display = "block";
+    return;
+  }
+
+  // Update the task
   todos[editingIndex].text = text;
   saveToLocalStorage();
   renderTodos();
-  modal.classList.add("hidden");
+
+  // Close the modal
+  closeModal();
 };
 
-const closeModal = () => modal.classList.add("hidden");
+const closeModal = () => {
+  modal.classList.remove("show-modal");
+  errorMessage.textContent = "";
+  errorMessage.style.display = "none";
+};
 
+// Listen for edit button clicks
+todoList.addEventListener("click", event => {
+  if (event.target.classList.contains("edit")) {
+    const index = event.target.dataset.index; // Get the index of the task
+    openEditModal(index); // Open the modal with the correct task
+  }
+});
+
+// Event listeners
 addTaskButton.addEventListener("click", addTask);
 filterAllButton.addEventListener("click", () => renderTodos("all"));
 filterDoneButton.addEventListener("click", () => renderTodos("done"));
@@ -121,4 +154,5 @@ deleteAllTasksButton.addEventListener("click", deleteAllTasks);
 confirmButton.addEventListener("click", confirmEdit);
 cancelButton.addEventListener("click", closeModal);
 
+// Initial render
 renderTodos();
