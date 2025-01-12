@@ -6,25 +6,24 @@
   <title>Todo List</title>
   <link rel="stylesheet" href="TO_do.css">
 </head>
+
 <body>
   <div class="container">
-    <h1>TodoInput</h1>
-    
-    
+    <h1>Todo Input</h1>
+    <div class="style-input">
     <div class="todo-input">
       <input id="todoInput" type="text" placeholder="Enter a new task"><br><br>
       <button id="addTaskButton">Add Task</button>
       <p id="errorMessage" class="validation-message"></p>
     </div>
-    <br><br>
-<h1>TodoList</h1>
+    </div>
+
+    <h1>Todo List</h1>
     <div class="filter-buttons">
       <button id="filterAllButton">All</button>
       <button id="filterDoneButton">Done</button>
       <button id="filterTodoButton">Todo</button>
     </div>
-    <br><br><br>
-
     <ul id="todoList" class="tasks-container"></ul>
 
     <div class="delete-buttons">
@@ -32,14 +31,13 @@
       <button id="deleteAllTasksButton" disabled>Delete All Tasks</button>
     </div>
   </div>
-
-  <div id="modal" class="modal">
+  
+  <div id="confirmModal" class="modal">
     <div class="modal-content">
-      <h2>Edit Task</h2>
-      <input id="modalInput" type="text" placeholder="Edit your task">
+      <p id="confirmMessage"></p>
       <div class="modal-buttons">
-        <button id="confirmButton" class="confirm">Confirm</button>
-        <button id="cancelButton" class="cancel">Cancel</button>
+        <button id="confirmAction" class="confirm">Yes</button>
+        <button id="cancelAction" class="cancel">No</button>
       </div>
     </div>
   </div>
