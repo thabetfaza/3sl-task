@@ -4,38 +4,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Todo List</title>
-  <link rel="stylesheet" href="TO_do.css">
+  <link rel="stylesheet" href="toodoo1.css">
 </head>
 <body>
   <div class="container">
     <h1>TodoInput</h1>
+    
+    
     <div class="todo-input">
-      <input id="todoInput" type="text" placeholder="New Todo">
-      <button id="addTaskButton">Add new task</button>
-      <p id="errorMessage" class="error-message"></p>
+      <input id="todoInput" type="text" placeholder="Enter a new task"><br><br>
+      <button id="addTaskButton">Add Task</button>
+      <p id="errorMessage" class="validation-message"></p>
     </div>
-    <h1>TodoList</h1>
+    <br><br>
+<h1>TodoList</h1>
     <div class="filter-buttons">
       <button id="filterAllButton">All</button>
       <button id="filterDoneButton">Done</button>
       <button id="filterTodoButton">Todo</button>
     </div>
-    <ul id="todoList"></ul>
-    <div class="actions">
-      <button id="deleteDoneTasksButton" disabled>Delete done tasks</button>
-      <button id="deleteAllTasksButton" disabled>Delete all tasks</button>
+    <br><br><br>
+
+    <ul id="todoList" class="tasks-container"></ul>
+
+    <div class="delete-buttons">
+      <button id="deleteDoneTasksButton" disabled>Delete Completed Tasks</button>
+      <button id="deleteAllTasksButton" disabled>Delete All Tasks</button>
     </div>
   </div>
-  <div id="modal" class="modal hidden">
+
+  <div id="modal" class="modal">
     <div class="modal-content">
-      <h2 id="modalTitle">Edit Task</h2>
-      <input id="modalInput" type="text">
-      <div class="modal-actions">
-        <button id="confirmButton">Confirm</button>
-        <button id="cancelButton">Cancel</button>
+      <h2>Edit Task</h2>
+      <input id="modalInput" type="text" placeholder="Edit your task">
+      <div class="modal-buttons">
+        <button id="confirmButton" class="confirm">Confirm</button>
+        <button id="cancelButton" class="cancel">Cancel</button>
       </div>
     </div>
   </div>
-  <script src="todo.js"></script>
+
+  <script src="taskssss.js"></script>
 </body>
 </html>
