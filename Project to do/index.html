@@ -12,7 +12,11 @@
     <h1>Todo Input</h1>
     <div class="style-input">
       <div class="todo-input">
-        <input id="todoInput" type="text" placeholder="Enter a new task"><br><br>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <i class="fa fa-book" style="color: #00bcd4; font-size: 20px;"></i>
+          <input id="todoInput" type="text" placeholder="New Todo" style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
+        <br>
         <button id="addTaskButton">Add Task</button>
         <p id="errorMessage" class="validation-message"></p>
       </div>
@@ -24,35 +28,35 @@
       <button id="filterDoneButton">Done</button>
       <button id="filterTodoButton">Todo</button>
     </div>
-    <ul id="todoList" class="tasks-container"></ul>
+    <ul id="todoList" class="tasks-container" style="max-height: 300px; overflow-y: auto;"></ul>
 
     <div class="delete-buttons">
       <button id="deleteDoneTasksButton" disabled>Delete Completed Tasks</button>
       <button id="deleteAllTasksButton" disabled>Delete All Tasks</button>
     </div>
   </div>
-  
+
   <div id="confirmModal" class="modal">
     <div class="modal-content">
       <p id="confirmMessage"></p>
       <div class="modal-buttons">
-        <button id="confirmAction" class="confirm">Yes</button>
-        <button id="cancelAction" class="cancel">No</button>
+        <button id="confirmAction" class="confirm">Confirm</button>
+        <button id="cancelAction" class="cancel">Cancel</button>
       </div>
     </div>
   </div>
-  
+
   <div id="editTaskModal" class="modal">
     <div class="modal-content">
       <h2 style="font-family: Georgia, 'Times New Roman', Times, serif;">Edit Task</h2>
       <input id="editTaskInput" type="text" placeholder="Edit your task">
       <div class="modal-buttons">
-        <button id="saveEditButton" class="confirm">Save</button>
+        <button id="saveEditButton" class="confirm">Confirm</button>
         <button id="cancelEditButton" class="cancel">Cancel</button>
       </div>
     </div>
   </div>
 
   <script src="todo.js"></script>
-    </body>
+</body>
 </html>
