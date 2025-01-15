@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo Task</title>
+  <title>Todo List</title>
   <link rel="stylesheet" href="TO_do.css">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
   <div class="container">
     <h1>Todo Input</h1>
-    <div class="style-input">
-      <div class="todo-input">
-        <input id="todoInput" type="text" placeholder="Enter a new task"><br><br>
-        <button id="addTaskButton">Add Task</button>
-        <p id="errorMessage" class="validation-message"></p>
-      </div>
-    </div>
+    
+    <div class="todo-input">
+      <input id="todoInput" type="text" placeholder="Enter a new task" aria-label="New Task Input"><br><br>
+      <button id="addTaskButton">Add Task</button>
+    
+<p id="errorMessage" style="color: red; font-size: 12px; display: none;"></p>
 
+    </div>
+    
     <h1>Todo List</h1>
     <div class="filter-buttons">
       <button id="filterAllButton">All</button>
@@ -31,30 +31,31 @@
       <button id="deleteAllTasksButton" disabled>Delete All Tasks</button>
     </div>
   </div>
-  
-  <div id="confirmModal" class="modal">
+
+  <!-- Modal for Editing Tasks -->
+  <div id="editModal" class="modal" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
     <div class="modal-content">
-      <p id="confirmMessage"></p>
+      <h2 id="editModalTitle">Edit Task</h2>
+      <input id="modalInput" type="text" placeholder="Edit your task" aria-label="Edit Task Input">
       <div class="modal-buttons">
-        <button id="confirmAction" class="confirm">Yes</button>
-        <button id="cancelAction" class="cancel">No</button>
-      </div>
-    </div>
-  </div>
-  
-  <div id="editTaskModal" class="modal">
-    <div class="modal-content">
-      <h2 style="font-family: Georgia, 'Times New Roman', Times, serif;">Edit Task</h2>
-      <input id="editTaskInput" type="text" placeholder="Edit your task">
-      <div class="modal-buttons">
-        <button id="saveEditButton" class="confirm">Save</button>
+        <button id="confirmEditButton" class="confirm">Confirm</button>
         <button id="cancelEditButton" class="cancel">Cancel</button>
       </div>
     </div>
   </div>
 
-  <script src="todo.js">
-    
-  </script>
+  <!-- Modal for Deleting Tasks -->
+  <div id="deleteModal" class="modal" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-content">
+      <h2 id="deleteModalTitle">Confirm Deletion</h2>
+      <p>Are you sure you want to delete the selected tasks?</p>
+      <div class="modal-buttons">
+        <button id="deleteConfirmButton" class="confirm">Yes</button>
+        <button id="deleteCancelButton" class="cancel">No</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="todo.js"></script>
 </body>
 </html>
