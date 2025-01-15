@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-  max-width: 800px;
+  max-width: 70%;
   margin: 50px auto;
   padding: 20px;
   background: #fff;
@@ -25,18 +25,18 @@ h1 {
 .todo-input {
   margin-bottom: 20px;
 }
-
-.style-input {
+.style-input{
   border: 2px double rgb(156, 155, 155);
   padding: 10px;
 }
 
 .todo-input input {
-  width: 90%;
+  width:90%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
+
 }
 
 .todo-input button {
@@ -85,16 +85,8 @@ h1 {
 
 .tasks-container {
   list-style: none;
-  padding: 0;
+  padding:0;
   margin: 0;
-  width: 80%;
-  max-height: 300px; /* Adjust to your preference */
-  margin: 20px auto;
-  overflow-y: auto; /* Enables scrolling */
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
 }
 
 .tasks-container li {
@@ -104,21 +96,8 @@ h1 {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   background: #f9f9f9;
-}
-
-.tasks-container::-webkit-scrollbar {
-  width: 8px;
-}
-
-.tasks-container::-webkit-scrollbar-thumb {
-  background-color: #00bcd4;
-  border-radius: 5px;
-}
-
-.tasks-container::-webkit-scrollbar-thumb:hover {
-  background-color: #008c9e;
 }
 
 .task-buttons {
@@ -166,65 +145,109 @@ h1 {
   background-color: #d70000;
 }
 
-.completed-task {
-  text-decoration: line-through;
-  color: red;
-}
-
-/* Modal Styling */
-
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1000; /* Sit on top */
-  left: 0;
+  display: none;
+  position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* Center vertically and horizontally */
+  background: white;
   padding: 20px;
-  border: 1px solid #888;
   border-radius: 8px;
-  width: 80%; /* Can adjust the width */
-  max-width: 400px;
   text-align: center;
+  width: 300px;
 }
 
 .modal-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
 }
 
-.modal-buttons .confirm {
-  background-color: rgb(145, 128, 126); /* Blue color */
-  color: white;
-  padding: 10px 20px;
+.modal-buttons button {
+  flex: 1;
+  margin: 0 12px;
+  padding: 10px;
+  
   border: none;
   border-radius: 4px;
-  cursor: pointer;
+  font-size: 16px;
 }
 
-.modal-buttons .cancel {
-  background-color: #f44336; /* Red color */
+.confirm {
+  background-color: #00bcd4;
   color: white;
-  padding: 10px 20px;
-  border: none;
+}
+
+.cancel {
+  background-color: #ff5252;
+  color: white;
+}
+
+.completed-task {
+  text-decoration: line-through;
+  color: red;
+}
+
+
+.tasks-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.tasks-container::-webkit-scrollbar-thumb {
+  background-color: #00bcd4;
+  border-radius: 5px;
+}
+
+.tasks-container::-webkit-scrollbar-thumb:hover {
+  background-color: #008c9e;
+}
+/* Modal container */
+#modal {
+  display: none; /* Initially hidden */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 1000;
+}
+#editTaskModal input {
+  width: 85%;
+  padding: 10px;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  cursor: pointer;
+  margin: 10px;
+  padding-top: 15px;
 }
 
-.modal-buttons .confirm:hover {
-  background-color: green; /* Darker blue on hover */
+
+/* Show modal */
+#modal.show-modal {
+  display: block; /* Show the modal */
 }
 
-.modal-buttons .cancel:hover {
-  background-color: #d32f2f; /* Darker red on hover */
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
-
+.task-title{
+  border:1px solid rgb(139, 137, 137);
+  padding: 10px;
+}
