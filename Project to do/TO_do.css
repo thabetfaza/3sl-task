@@ -251,3 +251,28 @@ h1 {
   border:1px solid rgb(139, 137, 137);
   padding: 10px;
 }
+.modal-buttons .confirm {
+  background-color: rgb(145, 128, 126); /* Blue color */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-buttons .cancel {
+  background-color: #f44336; /* Red color */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-buttons .confirm:hover {
+  background-color: green; /* Darker blue on hover */
+}
+
+.modal-buttons .cancel:hover {
+  background-color:red; /* Darker red on hover */
+}
